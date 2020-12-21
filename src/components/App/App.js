@@ -82,6 +82,12 @@ function App() {
     setTag('')
   }
 
+  //Обработчик клика по карточке
+  const handleImgClick = (tag) => {
+    console.log(tag)
+    setTag(tag)
+  }
+
   
 
   return (
@@ -94,7 +100,7 @@ function App() {
         handleClearBtn={handleClearBtn}
         tag={tag}
         handleSort={handleSortBtn}/>
-      <Main cards={card} isSort={isSort} keywards={uniqueTag}/>
+      <Main cards={card} isSort={isSort} keywards={uniqueTag} cardClick={handleImgClick}/>
       <Popup popupText={popupText} isVisible={popupVisible} onClose={closePopup}/>
     </div>
   );

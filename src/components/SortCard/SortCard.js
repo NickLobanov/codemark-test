@@ -2,7 +2,7 @@ import React from 'react';
 import './SortCard.css';
 import Card from '../Card/Card';
 
-function SortCard({ cards, tag}) {
+function SortCard({ cards, tag, cardClick}) {
 
     console.log(cards)
     return (
@@ -13,6 +13,7 @@ function SortCard({ cards, tag}) {
                     <Card key={data.keyword}
                         img={data.img}
                         alt={data.keyword}
+                        cardClick={cardClick}
                     />
                 ))}
             </div>
