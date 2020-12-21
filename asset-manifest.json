@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/codemark-test/static/css/main.c895de89.chunk.css",
+    "main.js": "/codemark-test/static/js/main.91ca472d.chunk.js",
+    "main.js.map": "/codemark-test/static/js/main.91ca472d.chunk.js.map",
+    "runtime-main.js": "/codemark-test/static/js/runtime-main.ad779bdf.js",
+    "runtime-main.js.map": "/codemark-test/static/js/runtime-main.ad779bdf.js.map",
+    "static/js/2.b4d20e0d.chunk.js": "/codemark-test/static/js/2.b4d20e0d.chunk.js",
+    "static/js/2.b4d20e0d.chunk.js.map": "/codemark-test/static/js/2.b4d20e0d.chunk.js.map",
+    "static/js/3.7a452d56.chunk.js": "/codemark-test/static/js/3.7a452d56.chunk.js",
+    "static/js/3.7a452d56.chunk.js.map": "/codemark-test/static/js/3.7a452d56.chunk.js.map",
+    "index.html": "/codemark-test/index.html",
+    "static/css/main.c895de89.chunk.css.map": "/codemark-test/static/css/main.c895de89.chunk.css.map",
+    "static/js/2.b4d20e0d.chunk.js.LICENSE.txt": "/codemark-test/static/js/2.b4d20e0d.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.ad779bdf.js",
+    "static/js/2.b4d20e0d.chunk.js",
+    "static/css/main.c895de89.chunk.css",
+    "static/js/main.91ca472d.chunk.js"
+  ]
+}
