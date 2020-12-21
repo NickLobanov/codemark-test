@@ -20,8 +20,11 @@ function App() {
   //Api key
   const key = 'i25iMmapAhnCyZ4sKNBzce6vrGfqI6hX'
 
+  //Валидация формы
   const handleInput = (evt) => {
-      setTag(evt.target.value)
+    setTag(evt.target.value)
+    const regEx = /[a-zA-Z](,)?/g;
+    setValid(regEx.test(evt.target.value))
   }
 
   //Закрытие popup
@@ -70,19 +73,11 @@ function App() {
       })
   }
 
-  //Валидация формы
-  const validationInput = (input) => {
-    const regEx = /[a-zA-Z](\,)?/g
-    console.log(input)
-    console.log(regEx.test(input))
-    setValid(regEx.test(input))
-  }
 
   //Обработчик формы
   const formSubmit = (evt) => {
     evt.preventDefault()
-    validationInput(tag)
-    if (isValid) {
+    if (isValid === true) {
       closePopup();
       setDisableButton(true);
       setKeywords([...keywords, tag]);
