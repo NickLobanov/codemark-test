@@ -8,3 +8,5 @@ npm install
 ```
 npm run start
 ``` 
+
+gh-pages: https://nicklobanov.github.io/codemark-test/
