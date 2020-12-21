@@ -3,6 +3,7 @@ import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
 import Popup from '../Popup/Popup';
+import * as api from '../../utils/Api';
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
   const [isSort, setSort] = React.useState(false)
   const [uniqueTag, setUniqueTag] = React.useState([])
 
+  //Api key
   const key = 'i25iMmapAhnCyZ4sKNBzce6vrGfqI6hX'
 
   const handleInput = (evt) => {
@@ -48,31 +50,35 @@ function App() {
   }
 
   //Получение карточки
-  async function handleSubmit(evt) {
-    try {
+  const getCard = () => {
+    api.getCard(key, tag)
+      .then((data) => {
+        if (data.data.length === 0) {
+          console.log('null')
+          setPopupVisible(true)
+          setPopupText('По тегу ничего не найдено')
+        } else {
+          setCard([...card, {keyword: `${tag}`, img: `${data.data.image_url}`}])
+        }
+      })
+      .catch(() => {
+        setPopupVisible(true)
+        setPopupText('Произошла http ошибка')
+      })
+      .finally(() => {
+        setDisableButton(false)
+        setLoadBtnText('Загрузить')
+      })
+  }
+
+  //Обработчик формы
+  const formSubmit = (evt) => {
       evt.preventDefault()
       closePopup();
-      setDisableButton(true)
-      setLoadBtnText('Загрузка..')
-      setKeywords([...keywards, tag])
-      const responce = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${key}&tag=${tag}`);
-      const data = await responce.json();
-      if (data.data.length === 0) {
-        console.log('null')
-        setPopupVisible(true)
-        setPopupText('По тегу ничего не найдено')
-      } else {
-        setCard([...card, {keyword: `${tag}`, img: `${data.data.image_url}`}])
-      }
-    }
-    catch {
-      setPopupVisible(true)
-      setPopupText('Произошла http ошибка')
-    }
-    finally {
-      setDisableButton(false)
-      setLoadBtnText('Загрузить')
-    }
+      setDisableButton(true);
+      setLoadBtnText('Загрузка..');
+      setKeywords([...keywards, tag]);
+      getCard();
   }
 
   //Удаление карточек 
@@ -84,16 +90,13 @@ function App() {
 
   //Обработчик клика по карточке
   const handleImgClick = (tag) => {
-    console.log(tag)
     setTag(tag)
   }
-
-  
 
   return (
     <div className="app">
       <Header handleInput={handleInput}
-        handleSubmit={handleSubmit}
+        handleSubmit={formSubmit}
         isDisable={disableButtno}
         loadBtnText={loadBtnText}
         uniteBtnText={uniteBtnText}
