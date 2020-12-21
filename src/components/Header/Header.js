@@ -1,7 +1,7 @@
 import React from 'react';
 import './Header.css';
 
-function Header({ handleInput, handleSubmit, isDisable, loadBtnText, uniteBtnText, handleClearBtn, tag}) {
+function Header({ handleInput, handleSubmit, isDisable, loadBtnText, uniteBtnText, handleClearBtn, tag, handleSort}) {
 
     return (
         <header className="header">
@@ -13,7 +13,7 @@ function Header({ handleInput, handleSubmit, isDisable, loadBtnText, uniteBtnTex
                         {loadBtnText}
                 </button>
                 <button type="button" className="header__button header__button_reset" onClick={handleClearBtn}>Очистить</button>
-                <button type="button" className="header__button header__button_unite">{uniteBtnText}</button>
+                <button type="button" className="header__button header__button_unite" onClick={handleSort}>{uniteBtnText}</button>
             </form>
         </header>
     )

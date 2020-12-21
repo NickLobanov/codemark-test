@@ -1,0 +1,19 @@
+.sort {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid silver;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.sort__wrap {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 10px 10px;
+}
+
+.sort__title {
+    padding-left: 10px;
+}

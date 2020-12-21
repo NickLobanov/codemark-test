@@ -8,11 +8,14 @@ function App() {
 
   const [tag, setTag] = React.useState('');
   const [card, setCard] = React.useState([]);
+  const [keywards, setKeywords] = React.useState([])
   const [disableButtno, setDisableButton] = React.useState(false);
   const [loadBtnText, setLoadBtnText] = React.useState('Загрузить');
   const [uniteBtnText, setUniteBtnText] = React.useState('Группировать');
   const [popupVisible, setPopupVisible] = React.useState(false);
-  const [popupText, setPopupText] = React.useState('')
+  const [popupText, setPopupText] = React.useState('');
+  const [isSort, setSort] = React.useState(false)
+  const [uniqueTag, setUniqueTag] = React.useState([])
 
   const key = 'i25iMmapAhnCyZ4sKNBzce6vrGfqI6hX'
 
@@ -25,6 +28,25 @@ function App() {
     setPopupVisible(false)
   }
 
+  //Сортировка карточек
+  const handleSort = () => {
+    setUniteBtnText('Разгруппировать')
+    const uniqueTag = keywards.filter((item, pos, arr) => arr.indexOf(item) === pos)
+    setUniqueTag(uniqueTag)
+    setSort(true)
+  }
+
+  //Разгруппировка карточек
+  const handleUnsort = () => {
+    setSort(false)
+    setUniteBtnText('Группировать')
+  }
+
+  //Обработчки кнопки сортировки 
+  const handleSortBtn = () => {
+    !isSort ? handleSort() : handleUnsort()
+  }
+
   //Получение карточки
   async function handleSubmit(evt) {
     try {
@@ -32,6 +54,7 @@ function App() {
       closePopup();
       setDisableButton(true)
       setLoadBtnText('Загрузка..')
+      setKeywords([...keywards, tag])
       const responce = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${key}&tag=${tag}`);
       const data = await responce.json();
       if (data.data.length === 0) {
@@ -69,8 +92,9 @@ function App() {
         loadBtnText={loadBtnText}
         uniteBtnText={uniteBtnText}
         handleClearBtn={handleClearBtn}
-        tag={tag}/>
-      <Main cards={card}/>
+        tag={tag}
+        handleSort={handleSortBtn}/>
+      <Main cards={card} isSort={isSort} keywards={uniqueTag}/>
       <Popup popupText={popupText} isVisible={popupVisible} onClose={closePopup}/>
     </div>
   );
