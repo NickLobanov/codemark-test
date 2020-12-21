@@ -10,13 +10,12 @@ function App() {
   const [tag, setTag] = React.useState('');
   const [card, setCard] = React.useState([]);
   const [keywords, setKeywords] = React.useState([])
-  const [disableButtno, setDisableButton] = React.useState(false);
-  const [loadBtnText, setLoadBtnText] = React.useState('Загрузить');
-  const [uniteBtnText, setUniteBtnText] = React.useState('Группировать');
+  const [disableButton, setDisableButton] = React.useState(false);
   const [popupVisible, setPopupVisible] = React.useState(false);
   const [popupText, setPopupText] = React.useState('');
-  const [isSort, setSort] = React.useState(false)
-  const [uniqueTag, setUniqueTag] = React.useState([])
+  const [isSort, setSort] = React.useState(false);
+  const [uniqueTag, setUniqueTag] = React.useState([]);
+  const [isValid, setValid] = React.useState(false)
 
   //Api key
   const key = 'i25iMmapAhnCyZ4sKNBzce6vrGfqI6hX'
@@ -33,7 +32,6 @@ function App() {
   //Сортировка карточек
   const handleSort = (evt) => {
     evt.preventDefault()
-    setUniteBtnText('Разгруппировать')
     const uniqueTag = keywords.filter((item, pos, arr) => arr.indexOf(item) === pos)
     setUniqueTag(uniqueTag)
     setSort(true)
@@ -43,7 +41,6 @@ function App() {
   const handleUnsort = (evt) => {
     evt.preventDefault()
     setUniqueTag([])
-    setUniteBtnText('Группировать')
     setSort(false)
   }
 
@@ -70,18 +67,30 @@ function App() {
       })
       .finally(() => {
         setDisableButton(false)
-        setLoadBtnText('Загрузить')
       })
+  }
+
+  //Валидация формы
+  const validationInput = (input) => {
+    const regEx = /[a-zA-Z](\,)?/g
+    console.log(input)
+    console.log(regEx.test(input))
+    setValid(regEx.test(input))
   }
 
   //Обработчик формы
   const formSubmit = (evt) => {
-      evt.preventDefault()
+    evt.preventDefault()
+    validationInput(tag)
+    if (isValid) {
       closePopup();
       setDisableButton(true);
-      setLoadBtnText('Загрузка..');
       setKeywords([...keywords, tag]);
       getCard();
+    } else {
+      setPopupVisible(true);
+      setPopupText('Разрешены только латинские буквы')
+    }
   }
 
   //Удаление карточек 
@@ -102,12 +111,11 @@ function App() {
     <div className="app">
       <Header handleInput={handleInput}
         handleSubmit={formSubmit}
-        isDisable={disableButtno}
-        loadBtnText={loadBtnText}
-        uniteBtnText={uniteBtnText}
+        isDisable={disableButton}
         handleClearBtn={handleClearBtn}
         tag={tag}
-        handleSort={handleSortBtn}/>
+        handleSort={handleSortBtn}
+        isSort={isSort}/>
       <Main cards={card} isSort={isSort} keywords={uniqueTag} cardClick={handleImgClick}/>
       <Popup popupText={popupText} isVisible={popupVisible} onClose={closePopup}/>
     </div>
