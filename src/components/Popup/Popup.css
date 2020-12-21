@@ -1,0 +1,28 @@
+.popup {
+    width: 250px;
+    height: 70px;
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    border: 1px solid silver;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    color: #ffffff;
+    visibility: hidden;
+}
+
+.popup__close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: transparent;
+    border: none;
+    font-size: 22px;
+}
+
+.popup__visibility {
+    visibility: visible;
+}

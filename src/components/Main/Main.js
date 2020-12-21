@@ -4,8 +4,6 @@ import Card from '../Card/Card';
 
 function Main({cards}) {
 
-    console.log(cards)
-
     return (
         <section className="main">
             {cards.map(data => (
