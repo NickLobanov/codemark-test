@@ -35,3 +35,7 @@
 .header__button_unite {
     background-color: blue;
 }
+
+.header__disable {
+    background-color: silver;
+}

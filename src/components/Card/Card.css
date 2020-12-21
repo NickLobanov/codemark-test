@@ -8,4 +8,7 @@
 
 .card__image {
     display: block;
+    width: 260px;
+    height: 260px;
+    object-fit: fill;
 }
