@@ -7,7 +7,9 @@ function App() {
 
   const [tag, setTag] = React.useState('');
   const [card, setCard] = React.useState([]);
-  const [disableButtno, setDisableButton] = React.useState(false)
+  const [disableButtno, setDisableButton] = React.useState(false);
+  const [loadBtnText, setLoadBtnText] = React.useState('Загрузить');
+  const [uniteBtnText, setUniteBtnText] = React.useState('Группировать')
 
   const key = 'i25iMmapAhnCyZ4sKNBzce6vrGfqI6hX'
 
@@ -15,10 +17,12 @@ function App() {
       setTag(evt.target.value)
   }
 
+  //Получение карточки
   async function handleSubmit(evt) {
     try {
       evt.preventDefault()
       setDisableButton(true)
+      setLoadBtnText('Загрузка..')
       const responce = await fetch(`https://api.giphy.com/v1/gifs/random?api_key=${key}&tag=${tag}`);
       const data = await responce.json();
       console.log(data)
@@ -29,12 +33,26 @@ function App() {
     }
     finally {
       setDisableButton(false)
+      setLoadBtnText('Загрузить')
     }
+  }
+
+  //Удаление карточек 
+  const handleClearBtn = (evt) => {
+    evt.preventDefault();
+    setCard([])
+    setTag('')
   }
 
   return (
     <div className="App">
-      <Header handleInput={handleInput} handleSubmit={handleSubmit} isDisable={disableButtno}/>
+      <Header handleInput={handleInput}
+        handleSubmit={handleSubmit}
+        isDisable={disableButtno}
+        loadBtnText={loadBtnText}
+        uniteBtnText={uniteBtnText}
+        handleClearBtn={handleClearBtn}
+        tag={tag}/>
       <Main cards={card}/>
     </div>
   );

@@ -1,19 +1,19 @@
 import React from 'react';
 import './Header.css';
 
-function Header({ handleInput, handleSubmit, isDisable }) {
+function Header({ handleInput, handleSubmit, isDisable, loadBtnText, uniteBtnText, handleClearBtn, tag}) {
 
     return (
         <header className="header">
             <form className="header__form" onSubmit={handleSubmit}>
-                <input placeholder="Введите тег" className="header__input" onChange={handleInput}/>
+                <input value={tag} placeholder="Введите тег" className="header__input" onChange={handleInput}/>
                 <button disable={isDisable}
                     type="submit"
                     className={`header__button header__button_submit ${isDisable && 'header__disable'}`}>
-                        Загрузить
+                        {loadBtnText}
                 </button>
-                <button type="button" className="header__button header__button_reset">Очистить</button>
-                <button type="button" className="header__button header__button_unite">Группировать</button>
+                <button type="button" className="header__button header__button_reset" onClick={handleClearBtn}>Очистить</button>
+                <button type="button" className="header__button header__button_unite">{uniteBtnText}</button>
             </form>
         </header>
     )
