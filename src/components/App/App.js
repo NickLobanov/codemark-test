@@ -9,7 +9,7 @@ function App() {
 
   const [tag, setTag] = React.useState('');
   const [card, setCard] = React.useState([]);
-  const [keywards, setKeywords] = React.useState([])
+  const [keywords, setKeywords] = React.useState([])
   const [disableButtno, setDisableButton] = React.useState(false);
   const [loadBtnText, setLoadBtnText] = React.useState('Загрузить');
   const [uniteBtnText, setUniteBtnText] = React.useState('Группировать');
@@ -31,22 +31,25 @@ function App() {
   }
 
   //Сортировка карточек
-  const handleSort = () => {
+  const handleSort = (evt) => {
+    evt.preventDefault()
     setUniteBtnText('Разгруппировать')
-    const uniqueTag = keywards.filter((item, pos, arr) => arr.indexOf(item) === pos)
+    const uniqueTag = keywords.filter((item, pos, arr) => arr.indexOf(item) === pos)
     setUniqueTag(uniqueTag)
     setSort(true)
   }
 
   //Разгруппировка карточек
-  const handleUnsort = () => {
-    setSort(false)
+  const handleUnsort = (evt) => {
+    evt.preventDefault()
+    setUniqueTag([])
     setUniteBtnText('Группировать')
+    setSort(false)
   }
 
   //Обработчки кнопки сортировки 
-  const handleSortBtn = () => {
-    !isSort ? handleSort() : handleUnsort()
+  const handleSortBtn = (evt) => {
+    !isSort ? handleSort(evt) : handleUnsort(evt)
   }
 
   //Получение карточки
@@ -77,15 +80,17 @@ function App() {
       closePopup();
       setDisableButton(true);
       setLoadBtnText('Загрузка..');
-      setKeywords([...keywards, tag]);
+      setKeywords([...keywords, tag]);
       getCard();
   }
 
   //Удаление карточек 
   const handleClearBtn = (evt) => {
     evt.preventDefault();
-    setCard([])
-    setTag('')
+    setCard([]);
+    setTag('');
+    setUniqueTag([])
+    setKeywords([])
   }
 
   //Обработчик клика по карточке
@@ -103,7 +108,7 @@ function App() {
         handleClearBtn={handleClearBtn}
         tag={tag}
         handleSort={handleSortBtn}/>
-      <Main cards={card} isSort={isSort} keywards={uniqueTag} cardClick={handleImgClick}/>
+      <Main cards={card} isSort={isSort} keywords={uniqueTag} cardClick={handleImgClick}/>
       <Popup popupText={popupText} isVisible={popupVisible} onClose={closePopup}/>
     </div>
   );
