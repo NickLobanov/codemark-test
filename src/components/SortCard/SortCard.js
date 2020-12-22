@@ -12,7 +12,8 @@ function SortCard({ cards, tag, cardClick}) {
             <div className="sort__wrap">
                 {sortCards.map(data => (
                     <Card key={data.keyword}
-                        img={data.img}
+                        firstImg={data.img[0]}
+                        secondImg={data.img[1]}
                         alt={data.keyword}
                         cardClick={cardClick}
                     />

@@ -12,3 +12,15 @@
     height: 260px;
     object-fit: fill;
 }
+
+.card__wrap {
+    width: 260px;
+    height: 260px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card__image_unite {
+    width: 125px;
+    height: 125px;
+}

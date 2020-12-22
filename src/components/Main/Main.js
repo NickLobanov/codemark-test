@@ -11,7 +11,8 @@ function Main({cards, isSort, keywords, cardClick}) {
                 <div className={`main__cards ${!isSort && 'main__cards_open'}`}>
                     {(cards.map(data => (
                     <Card key={data.keyword}
-                    img={data.img}
+                    firstImg={data.img[0]}
+                    secondImg={data.img[1]}
                     alt={data.keyword}
                     cardClick={cardClick}
                     />
