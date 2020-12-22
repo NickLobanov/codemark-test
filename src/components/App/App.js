@@ -52,51 +52,69 @@ function App() {
     !isSort ? handleSort(evt) : handleUnsort(evt)
   }
 
-  //Получение карточки
-  const getCard = () => {
-    const splitArr = tag.split(', ')
-    if (splitArr[1] === undefined) {
-      api.getCard(key, tag)
-        .then((data) => {
-          if (data.data.length === 0) {
-            setPopupVisible(true)
-            setPopupText('По тегу ничего не найдено')
-          } else {
-            setCard([...card, {keyword: `${tag}`, img: [data.data.image_url]}])
-          }
-        })
-        .catch(() => {
+  //Получение одной карточки
+  const getSingleCard = () => {
+    api.getCard(key, tag)
+      .then((data) => {
+        if (data.data.length === 0) {
           setPopupVisible(true)
-          setPopupText('Произошла http ошибка')
-        })
-        .finally(() => {
-          setDisableButton(false)
-        })
-    } else {
-      Promise.all([api.getCard(key, splitArr[0]), api.getCard(key, splitArr[1])])
-        .then(([firstCard, secondCard]) => {
-          setCard([...card, {keyword: `${tag}`, img: [firstCard.data.image_url, secondCard.data.image_url]}])
-        })
-        .catch(() => {
-          setPopupVisible(true)
-          setPopupText('Произошла http ошибка')
-        })
-        .finally(() => {
-          setDisableButton(false)
-        })
-    }
-    
+          setPopupText('По тегу ничего не найдено')
+        } else {
+          setCard([...card, {keyword: `${tag}`, img: [data.data.image_url]}])
+        }
+      })
+      .catch(() => {
+        setPopupVisible(true)
+        setPopupText('Произошла http ошибка')
+      })
+      .finally(() => {
+        setDisableButton(false)
+      })
   }
 
-  //Проверка мультитега
-  // const checkTag = () => {
-  //   if (tag.includes(',')) {
-  //     const splitArr = tag.split(', ');
-  //     setTag(splitArr[0])
-  //     setSecondTag(splitArr[1])
-  //   }
-  // }
+  //Получение мульткарточки
+  const getMultiCard = (arr) => {
+    Promise.all([api.getCard(key, arr[0]), api.getCard(key, arr[1])])
+      .then(([firstCard, secondCard]) => {
+        setCard([...card, {keyword: `${tag}`, img: [firstCard.data.image_url, secondCard.data.image_url]}])
+      })
+      .catch(() => {
+        setPopupVisible(true)
+        setPopupText('Произошла http ошибка')
+      })
+      .finally(() => {
+        setDisableButton(false)
+      })
+  }
+  
+  //Получение рандомной карточки
+  const getRandomCard = () => {
+    api.getCardRandom(key)
+      .then((data) => {
+        setCard([...card, {keyword: `${tag}`, img: [data.data.image_url]}])
+      })
+      .catch(() => {
+        setPopupVisible(true)
+        setPopupText('Произошла http ошибка')
+      })
+      .finally(() => {
+        setDisableButton(false)
+      })
+  }
 
+  //Получение карточек
+  const getCard = () => {
+    const splitArr = tag.split(', ') //проверяем мультитег
+    if (tag === 'delay') {
+      setTimeout(getRandomCard, 5000)
+    }
+    if (splitArr[1] === undefined && tag !== 'delay') {
+      getSingleCard()
+    } 
+    if (splitArr[1] !== undefined && tag !== 'delay') {
+      getMultiCard(splitArr)
+    }
+  }
 
   //Обработчик формы
   const formSubmit = (evt) => {
